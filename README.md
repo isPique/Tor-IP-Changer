@@ -30,7 +30,6 @@
     ```bash
     sudo python3 IP-Changer.py
     ```
-
 <br>
 
 ![Terminal](https://github.com/isPique/Tor-IP-Changer/blob/main/Terminal.jpg)
