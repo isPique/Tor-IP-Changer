@@ -33,4 +33,4 @@
 
 <br>
 
-![image](https://github.com/isPique/Tor-IP-Changer/assets/139041426/91d34fc2-24db-4f48-a11f-72e27f556c3f)
+![Terminal](https://github.com/isPique/Tor-IP-Changer/blob/main/Terminal.jpg)
