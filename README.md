@@ -6,11 +6,6 @@
 
 > This version of the tool is currently supported only on Unix-like operating systems (like Linux and MacOS).
 
-## Prerequisites
-
-- Python 3.x
-- `requests` library (`pip install requests`)
-
 ## Usage
 
 1. Clone the repository:
@@ -25,7 +20,13 @@
     cd Tor-IP-Changer
     ```
 
-3. Run the script:
+3. Install required libraries:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Run the script:
 
     ```bash
     sudo python3 IP-Changer.py
