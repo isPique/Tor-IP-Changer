@@ -4,7 +4,8 @@
 * Basically it enters a loop where it continuously fetches a new IP address through Tor proxies.
 * Restart tor service, and you got a new IP :D
 
-> This version of the tool is currently supported only on Unix-like operating systems (like Linux and MacOS).
+> [!IMPORTANT]
+> This version of the tool is currently supported only on Unix-like operating systems.
 
 ## Usage
 
