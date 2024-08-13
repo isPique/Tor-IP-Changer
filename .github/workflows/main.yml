@@ -22,7 +22,7 @@ jobs:
         python-version: '3.8'
 
     - name: Install dependencies
-      run: sudo apt update && sudo apt install -y tor
+      run: sudo apt-get update && sudo apt-get install -y tor
            pip install requests
 
     - name: Run script
