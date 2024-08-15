@@ -1,7 +1,11 @@
 import subprocess
 import requests
 import time
+import sys
 import os
+
+if os.name == 'nt':
+    sys.exit("This tool can only run on Linux!")
 
 def display_banner():
     os.system('cls' if os.name == 'nt' else 'clear')
