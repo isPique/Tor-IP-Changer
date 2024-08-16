@@ -1,3 +1,5 @@
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 import subprocess
 import requests
 import time
@@ -29,7 +31,11 @@ def display_banner():
           '''.format(DEFAULT, GREEN, RED, YELLOW, YELLOW2, ITALIC, BLINK))
 
 def install_tor():
-    if subprocess.run(['which', 'tor'], stdout = subprocess.PIPE, stderr = subprocess.PIPE).returncode != 0:
+    if subprocess.run(['which', 'apt'], stdout=subprocess.PIPE, stderr=subprocess.PIPE).returncode != 0:
+        logging.error("This script requires apt, but it's not installed.")
+        return False
+
+    if subprocess.run(['which', 'tor'], stdout=subprocess.PIPE, stderr=subprocess.PIPE).returncode != 0:
         print("\033[1;91m[!]\033[1;93m Tor is not installed. Installing it...\033[0m")
         if os.system("sudo apt install tor -y > /dev/null 2>&1"):
             print("\033[1;91m[!]\033[1;93m Failed to install Tor!\n\033[1;91m[!]\033[1;93m Please check your network connection.\033[0m")
@@ -38,6 +44,18 @@ def install_tor():
             print("\033[1;92m[+] Tor has been successfully installed.\033[0m")
             time.sleep(1)
     return True
+def check_tor_connection():
+    logging.info("[*] Checking for Tor connection...")
+    tor_status = subprocess.run(["sudo", "service", "tor", "status"], capture_output=True, text=True)
+    if "Active: active" in tor_status.stdout:
+        logging.info("[+] Tor is already running.")
+        return True
+    else:
+        logging.warning("[-] Tor is not running.")
+        logging.info("[*] Starting Tor service...")
+        subprocess.run("sudo service tor start", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        time.sleep(3)
+        return False
 
 def main():
     # Check if script is running with root privileges
@@ -68,12 +86,15 @@ def main():
             print(f"\033[1;34m[*] Your Tor version is: {version}\033[0m")
         except Exception:
             pass
+        if not check_tor_connection():
+            return
 
         try:
             response = requests.get(url)
             current_ip = response.json()["origin"]
             print(f"\033[1;34m[*] Your current IP address is: {current_ip}\033[0m")
-        except:
+        except Exception as e:
+            logging.error(f"Error occurred: {str(e)}")
             pass
 
         try:
@@ -88,19 +109,6 @@ def main():
         print(f"\033[1;91m[!]\033[1;93m Your IP address will be changed every {time_interval} seconds until you stop the script!")
         print("\033[1;91m[!]\033[1;93m Press Ctrl + C to stop.")
         time.sleep(1)
-
-        print("\033[1;34m[*] Checking for Tor connection...\033[0m")
-
-        tor_status = subprocess.run(["sudo", "service", "tor", "status"], capture_output = True, text = True)
-        if "Active: active" in tor_status.stdout:
-            print("\033[1;92m[+] Tor is already running.\033[0m")
-
-        else:
-            print("\033[1;93m[-] Tor is not running.\033[0m")
-            print("\033[1;34m[*] Starting Tor service...\033[0m")
-            subprocess.run("sudo service tor start", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
-            time.sleep(3)
-
         while True:
             try:
                 response = requests.get(url, proxies = proxy)
@@ -120,3 +128,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
