@@ -1,7 +1,7 @@
 import os
 import sys
-import main_win
-import main_linux
+from scr import main_win
+from scr import main_linux
 
 
 def run_windows_script():
@@ -14,10 +14,8 @@ def run_linux_script():
 
 def main():
     if os.name == 'nt':
-        # Якщо Windows
         run_windows_script()
     elif os.name == 'posix':
-        # Якщо Linux
         run_linux_script()
     else:
         print("Unsupported operating system")
