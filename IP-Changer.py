@@ -35,7 +35,7 @@ def main():
         return
     else:
         tor_process = None
-        tor_url = "https://archive.torproject.org/tor-package-archive/torbrowser/14.0.4/tor-expert-bundle-windows-x86_64-14.0.4.tar.gz"
+        tor_url = "https://archive.torproject.org/tor-package-archive/torbrowser/14.0.7/tor-expert-bundle-windows-x86_64-14.0.7.tar.gz"
         filename = "tor.tar.gz"
         default_extract_path = "tor_path.txt"
 
