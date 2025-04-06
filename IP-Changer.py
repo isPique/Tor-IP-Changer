@@ -90,6 +90,11 @@ def main():
                     sys.exit("\033[1;91m[-] Invalid choice.\033[0m")
                 try:
                     with tarfile.open(filename, "r:gz") as tar:
+                        members = tar.getmembers()
+                        for member in members:
+                            # Just in case path traversal attack protection
+                            if not os.path.commonpath([os.path.abspath(os.path.join(tor_path, member.name))]).startswith(os.path.abspath(tor_path)):
+                                raise tarfile.TarError(f"Security warning: File '{member.name}' attempts to extract outside '{tor_path}'")
                         tar.extractall(f"{extract_path}\\Tor Expert Bundle", filter='fully_trusted')
                     os.remove(filename)
                     print(f"\033[1;92m[+] Tor has been successfully extracted to the '{extract_path}\\Tor Expert Bundle'\033[0m")
